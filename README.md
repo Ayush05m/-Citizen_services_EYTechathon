@@ -1,12 +1,50 @@
-### Citizen services - Streamlining public service delivery with AI
- # Scenario: 
-Priya, a mother of two from a rural village in Madhya Pradesh, receives a monthly allowance of INR10,000 and wants to explore 
-various government schemes for her family's benefit. However, the information about eligibility and the process for availing 
-these schemes is scattered, making it difficult for her to access the right services. She often faces challenges such as lengthy 
-travel, long queues, and missing documents, which complicate her efforts to secure the support she needs.
- # Student’s challenge: 
-Develop an AI-driven platform that streamlines access to government schemes and services for individuals like Priya and 
-develop a curated experience. The solution could leverage AI for tasks such as verifying documents, automating the discovery of 
-eligible schemes, and providing personalized guidance, making it easier for citizens to understand their eligibility and avail the 
-benefits efficiently. You can refer to https://www.myscheme.gov.in/ 
-for a comprehensive listing of government schemes.
+# React + TypeScript + Vite
+
+This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+
+Currently, two official plugins are available:
+
+- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
+- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+
+## Expanding the ESLint configuration
+
+If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+
+- Configure the top-level `parserOptions` property like this:
+
+```js
+export default tseslint.config({
+  languageOptions: {
+    // other options...
+    parserOptions: {
+      project: ['./tsconfig.node.json', './tsconfig.app.json'],
+      tsconfigRootDir: import.meta.dirname,
+    },
+  },
+})
+```
+
+- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
+- Optionally add `...tseslint.configs.stylisticTypeChecked`
+- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
+
+```js
+// eslint.config.js
+import react from 'eslint-plugin-react'
+
+export default tseslint.config({
+  // Set the react version
+  settings: { react: { version: '18.3' } },
+  plugins: {
+    // Add the react plugin
+    react,
+  },
+  rules: {
+    // other rules...
+    // Enable its recommended rules
+    ...react.configs.recommended.rules,
+    ...react.configs['jsx-runtime'].rules,
+  },
+})
+```
