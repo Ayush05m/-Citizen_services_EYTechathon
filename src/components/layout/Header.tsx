@@ -1,8 +1,14 @@
 import { Link } from 'react-router-dom';
-import { useAuth } from '@/context/AuthContext';
+import { useAppSelector, useAppDispatch } from '@/hooks/redux';
+import { logout } from '@/store/slices/authSlice';
 
 export default function Header() {
-  const { user, logout } = useAuth();
+  const dispatch = useAppDispatch();
+  const { user } = useAppSelector(state => state.auth);
+
+  const handleLogout = () => {
+    dispatch(logout());
+  };
 
   return (
     <header className="bg-white shadow">
@@ -18,7 +24,7 @@ export default function Header() {
                   Dashboard
                 </Link>
                 <button
-                  onClick={logout}
+                  onClick={handleLogout}
                   className="text-gray-600 hover:text-gray-900"
                 >
                   Logout

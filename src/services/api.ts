@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { Scheme, Document } from '@/types';
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:3000/api';
 
@@ -9,7 +10,7 @@ const api = axios.create({
   },
 });
 
-api.interceptors.request.use((config: any) => {
+api.interceptors.request.use((config) => {
   const token = localStorage.getItem('token');
   if (token) {
     config.headers.Authorization = `Bearer ${token}`;
@@ -18,23 +19,37 @@ api.interceptors.request.use((config: any) => {
 });
 
 export const schemes = {
-  getAll: () => api.get('/schemes'),
-  getById: (id: string) => api.get(`/schemes/${id}`),
-  checkEligibility: (schemeId: string, userData: any) => 
-    api.post(`/schemes/${schemeId}/check-eligibility`, userData),
+  getAll: async () => {
+    const response = await api.get<Scheme[]>('/schemes');
+    return response.data;
+  },
+  getById: async (id: string) => {
+    const response = await api.get<Scheme>(`/schemes/${id}`);
+    return response.data;
+  },
+  checkEligibility: async (schemeId: string, userData: any) => {
+    const response = await api.post(`/schemes/${schemeId}/check-eligibility`, userData);
+    return response.data;
+  },
 };
 
 export const documents = {
-  upload: (file: File) => {
-    const formData = new FormData();
-    formData.append('document', file);
-    return api.post('/documents/upload', formData, {
+  getAll: async () => {
+    const response = await api.get<Document[]>('/documents');
+    return response.data;
+  },
+  upload: async (formData: FormData) => {
+    const response = await api.post<Document>('/documents/upload', formData, {
       headers: {
         'Content-Type': 'multipart/form-data',
       },
     });
+    return response.data;
   },
-  verify: (documentId: string) => api.post(`/documents/${documentId}/verify`),
+  verify: async (documentId: string) => {
+    const response = await api.post<Document>(`/documents/${documentId}/verify`);
+    return response.data;
+  },
 };
 
 export default api; 
